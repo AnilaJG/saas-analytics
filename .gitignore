@@ -1,0 +1,12 @@
+# dbt target & packages
+target/
+dbt_packages/
+logs/
+
+# Credentials & environment files
+profiles.yml
+.env
+
+# System files
+.DS_Store
+Thumbs.db
