@@ -1,0 +1,51 @@
+customer_id,company_name,signup_date,plan_tier
+cust_001,Acme Corp,2024-04-12,Pro
+cust_002,Globex Corporation,2024-09-27,Basic
+cust_003,Initech,2024-04-16,Enterprise
+cust_004,Umbrella Logistics,2024-03-12,Pro
+cust_005,Stark Industries,2024-07-07,Enterprise
+cust_006,Wayne Enterprises,2024-01-21,Enterprise
+cust_007,Cyberdyne Systems,2024-04-12,Pro
+cust_008,Massive Dynamic,2024-05-01,Enterprise
+cust_009,Hooli,2024-08-02,Basic
+cust_010,Pied Piper,2024-03-28,Basic
+cust_011,Soylent Corp,2024-04-09,Basic
+cust_012,Wonka Industries,2024-05-31,Basic
+cust_013,Vandelay Industries,2024-05-10,Basic
+cust_014,Nakatomi Trading,2024-05-29,Basic
+cust_015,Bluth Company,2024-09-14,Enterprise
+cust_016,Sterling Cooper,2024-10-20,Basic
+cust_017,Dunder Mifflin,2024-07-10,Basic
+cust_018,Prestige Worldwide,2024-10-03,Pro
+cust_019,DynCorp,2024-06-09,Basic
+cust_020,Gekko & Co,2024-01-22,Enterprise
+cust_021,Aperture Science,2024-09-09,Basic
+cust_022,Black Mesa,2024-08-23,Enterprise
+cust_023,Tyrell Corp,2024-02-18,Pro
+cust_024,Omni Consumer Products,2024-02-28,Basic
+cust_025,Weyland-Yutani,2024-06-18,Basic
+cust_026,Siren Corp,2024-07-06,Enterprise
+cust_027,Virtucon,2024-09-27,Pro
+cust_028,Globex Corp,2024-07-08,Pro
+cust_029,Abstergo Industries,2024-06-23,Pro
+cust_030,Morley Tobacco,2024-02-20,Basic
+cust_031,Gringotts Bank,2024-02-24,Basic
+cust_032,Ollivanders,2024-08-31,Basic
+cust_033,Stark Labs,2024-05-10,Enterprise
+cust_034,Wayne Tech,2024-05-14,Pro
+cust_035,LexCorp,2024-01-21,Basic
+cust_036,Oscorp,2024-06-15,Basic
+cust_037,Stark-Fujikawa,2024-09-30,Basic
+cust_038,Kord Industries,2024-03-29,Basic
+cust_039,Queen Consolidated,2024-01-14,Pro
+cust_040,Palmer Tech,2024-08-29,Pro
+cust_041,S.T.A.R. Labs,2024-09-21,Enterprise
+cust_042,Snoop Dogg Logistics,2024-02-22,Basic
+cust_043,Brawndo Corp,2024-04-01,Basic
+cust_044,InGen,2024-09-20,Pro
+cust_045,BuyMore,2024-02-04,Pro
+cust_046,Los Pollos Hermanos,2024-07-24,Pro
+cust_047,Monsters Inc,2024-03-21,Pro
+cust_048,Planet Express,2024-02-19,Basic
+cust_049,Sterling Logistics,2024-01-02,Pro
+cust_050,Puffins Inc,2024-02-23,Basic
