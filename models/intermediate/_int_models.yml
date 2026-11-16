@@ -1,0 +1,71 @@
+models:
+  - name: int_customer_metrics
+    description: "Intermediate model aggregating subscription counts, revenue, and payment recency per customer."
+    columns:
+      - name: customer_id
+        description: "Primary key for the customer."
+        data_tests:
+          - unique
+          - not_null
+      - name: company_name
+        description: "Name of the customer company."
+        data_tests:
+          - not_null
+      - name: signup_date
+        description: "Date the customer signed up."
+        data_tests:
+          - not_null
+      - name: plan_tier
+        description: "Subscription tier assigned to the customer."
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['basic', 'pro', 'enterprise']
+      - name: total_subscriptions
+        description: "Total number of distinct subscriptions owned by the customer."
+      - name: total_amount_due
+        description: "Lifetime total amount billed across all invoices."
+      - name: total_amount_paid
+        description: "Lifetime total amount successfully paid by the customer."
+      - name: outstanding_balance
+        description: "Total unpaid balance remaining (amount due minus amount paid)."
+      - name: most_recent_payment_date
+        description: "Timestamp of the customer's latest successful payment."
+
+  - name: int_invoice_payments
+    description: "Intermediate model enriching invoice transactions with customer and subscription details."
+    columns:
+      - name: invoice_id
+        description: "Primary key for the invoice transaction."
+        data_tests:
+          - unique
+          - not_null
+      - name: subscription_id
+        description: "Foreign key linking to the subscription."
+        data_tests:
+          - not_null
+      - name: customer_id
+        description: "Foreign key linking to the customer."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: company_name
+        description: "Name of the customer company."
+      - name: plan_tier
+        description: "Plan tier for the subscription."
+      - name: amount_due
+        description: "Total amount billed on the invoice."
+      - name: amount_paid
+        description: "Total amount paid toward the invoice."
+      - name: unpaid_balance
+        description: "Remaining unpaid balance on the invoice."
+      - name: payment_status
+        description: "Categorized status of the invoice."
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['paid', 'partial', 'unpaid']
+      - name: payment_date
+        description: "Date the payment was settled."

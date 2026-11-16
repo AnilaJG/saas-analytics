@@ -1,0 +1,72 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Customer dimension table containing profile details, lifetime metrics, and recency-based status."
+    columns:
+      - name: customer_id
+        description: "Unique primary key for each customer."
+        data_tests:
+          - unique
+          - not_null
+      - name: company_name
+        description: "Company name of the customer."
+      - name: signup_date
+        description: "Account creation date."
+      - name: plan_tier
+        description: "Current active plan tier."
+        data_tests:
+          - accepted_values:
+              values: ['basic', 'pro', 'enterprise']
+      - name: total_subscriptions
+        description: "Total count of subscriptions held."
+      - name: lifetime_amount_due
+        description: "Total lifetime billed amount."
+      - name: lifetime_amount_paid
+        description: "Total lifetime paid amount."
+      - name: outstanding_balance
+        description: "Current outstanding balance across all accounts."
+      - name: most_recent_payment_date
+        description: "The date of the most recent payment received from the customer."
+      - name: customer_status
+        description: "Derived lifecycle status based on 90-day payment recency."
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['active', 'churned', 'prospect']
+
+  - name: fct_invoices
+    description: "Invoice fact table capturing transactional billing, balances, and collection statuses."
+    columns:
+      - name: invoice_id
+        description: "Unique identifier for each invoice."
+        data_tests:
+          - unique
+          - not_null
+      - name: subscription_id
+        description: "Foreign key linking the invoice to its parent subscription."
+        data_tests:
+          - not_null
+      - name: customer_id
+        description: "Foreign key linking the invoice to the customer dimension table."
+        data_tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_id
+      - name: company_name
+        description: "Customer company name associated with the invoice."
+      - name: plan_tier
+        description: "Plan tier at the time of invoicing."
+      - name: amount_due
+        description: "Total billed amount for the invoice."
+      - name: amount_paid
+        description: "Amount successfully collected."
+      - name: unpaid_balance
+        description: "Remaining balance on the specific invoice."
+      - name: payment_status
+        description: "Collection classification."
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['paid', 'partial', 'unpaid']

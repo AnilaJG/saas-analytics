@@ -9,10 +9,18 @@ models:
           - not_null
       - name: company_name
         description: "Registered business name of the customer."
+        data_tests:
+          - not_null
       - name: signup_date
         description: "Date when the customer account was created."
+        data_tests:
+          - not_null
       - name: plan_tier
         description: "Initial subscription plan tier chosen at signup."
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['Basic', 'Pro', 'Enterprise']
 
   - name: stg_subscriptions
     description: "Staging model for subscription contracts. One row per subscription."
@@ -32,6 +40,10 @@ models:
                 field: customer_id
       - name: plan_tier
         description: "Current active or historical subscription tier (e.g., Basic, Pro, Enterprise)."
+        data_tests:
+          - not_null
+          - accepted_values:
+              values: ['Basic', 'Pro', 'Enterprise']
       - name: status
         description: "Subscription status (e.g., active, cancelled, past_due)."
       - name: mrr
@@ -70,7 +82,7 @@ models:
       - name: amount_paid
         description: "Amount paid towards the invoice."
       - name: status
-        description: "Payment status of the invoice (e.g., paid, open, void)."
+        description: "Payment status of the invoice."
       - name: invoice_date
         description: "Date when the invoice was issued."
       - name: due_date
