@@ -20,7 +20,8 @@ models:
         data_tests:
           - not_null
           - accepted_values:
-              values: ['basic', 'pro', 'enterprise']
+              arguments:
+                values: ['Basic', 'Pro', 'Enterprise']
       - name: total_subscriptions
         description: "Total number of distinct subscriptions owned by the customer."
       - name: total_amount_due
@@ -31,7 +32,7 @@ models:
         description: "Total unpaid balance remaining (amount due minus amount paid)."
       - name: most_recent_payment_date
         description: "Timestamp of the customer's latest successful payment."
-
+        
   - name: int_invoice_payments
     description: "Intermediate model enriching invoice transactions with customer and subscription details."
     columns:
@@ -49,8 +50,9 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('stg_customers')
-              field: customer_id
+              arguments:
+                to: ref('stg_customers')
+                field: customer_id
       - name: company_name
         description: "Name of the customer company."
       - name: plan_tier
@@ -66,6 +68,7 @@ models:
         data_tests:
           - not_null
           - accepted_values:
-              values: ['paid', 'partial', 'unpaid']
+              arguments:
+                values: ['paid', 'partial', 'unpaid']
       - name: payment_date
         description: "Date the payment was settled."

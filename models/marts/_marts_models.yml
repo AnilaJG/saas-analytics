@@ -17,7 +17,8 @@ models:
         description: "Current active plan tier."
         data_tests:
           - accepted_values:
-              values: ['basic', 'pro', 'enterprise']
+              arguments:
+                values: ['Basic', 'Pro', 'Enterprise']
       - name: total_subscriptions
         description: "Total count of subscriptions held."
       - name: lifetime_amount_due
@@ -33,7 +34,8 @@ models:
         data_tests:
           - not_null
           - accepted_values:
-              values: ['active', 'churned', 'prospect']
+              arguments:
+                values: ['active', 'churned', 'prospect']
 
   - name: fct_invoices
     description: "Invoice fact table capturing transactional billing, balances, and collection statuses."
@@ -52,8 +54,9 @@ models:
         data_tests:
           - not_null
           - relationships:
-              to: ref('dim_customers')
-              field: customer_id
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
       - name: company_name
         description: "Customer company name associated with the invoice."
       - name: plan_tier
@@ -69,4 +72,5 @@ models:
         data_tests:
           - not_null
           - accepted_values:
-              values: ['paid', 'partial', 'unpaid']
+              arguments:
+                values: ['paid', 'partial', 'unpaid']
