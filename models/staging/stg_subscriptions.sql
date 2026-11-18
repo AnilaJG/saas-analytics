@@ -10,7 +10,7 @@ renamed as (
         status,
         billing_interval,
         start_date,
-        end_date,
+        end_date
     from source
 )
 
