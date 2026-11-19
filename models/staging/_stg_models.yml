@@ -42,12 +42,26 @@ models:
                 field: customer_id
       - name: mrr_amount
         description: "Monthly Recurring Revenue amount for the subscription."
+        data_tests:
+          - not_null
       - name: subscription_status
         description: "Subscription status: active or canceled."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['active', 'canceled']
       - name: billing_interval
         description: "Billing frequency for the subscription (e.g., monthly, annual)."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['monthly', 'annual']
       - name: start_date
         description: "Date when the subscription became active."
+        data_tests:
+          - not_null
       - name: end_date
         description: "Date when the subscription was terminated or expired."
 
