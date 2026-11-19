@@ -6,7 +6,7 @@ renamed as (
     select
         customer_id,
         company_name,
-        signup_date,
+        signup_date::date as signup_date,
         plan_tier
     from source
 )
