@@ -42,8 +42,8 @@ models:
                 field: customer_id
       - name: mrr_amount
         description: "Monthly Recurring Revenue amount for the subscription."
-      - name: status
-        description: "Subscription status (e.g., active, cancelled, past_due)."
+      - name: subscription_status
+        description: "Subscription status: active or canceled."
       - name: billing_interval
         description: "Billing frequency for the subscription (e.g., monthly, annual)."
       - name: start_date
