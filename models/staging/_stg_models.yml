@@ -17,7 +17,7 @@ models:
         data_tests:
           - not_null
       - name: plan_tier
-        description: "Initial subscription plan tier chosen at signup."
+        description: "Customer plan tier (Basic, Pro or Enterprise)."
         data_tests:
           - not_null
           - accepted_values:
@@ -42,12 +42,26 @@ models:
                 field: customer_id
       - name: mrr_amount
         description: "Monthly Recurring Revenue amount for the subscription."
-      - name: status
-        description: "Subscription status (e.g., active, cancelled, past_due)."
+        data_tests:
+          - not_null
+      - name: subscription_status
+        description: "Subscription status: active or canceled."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['active', 'canceled']
       - name: billing_interval
         description: "Billing frequency for the subscription (e.g., monthly, annual)."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['monthly', 'annual']
       - name: start_date
         description: "Date when the subscription became active."
+        data_tests:
+          - not_null
       - name: end_date
         description: "Date when the subscription was terminated or expired."
 
@@ -77,11 +91,24 @@ models:
                 field: customer_id
       - name: amount_due
         description: "Total invoice amount billed."
+        data_tests:
+          - not_null
       - name: amount_paid
         description: "Amount paid towards the invoice."
-      - name: status
-        description: "Payment status of the invoice."
+        data_tests:
+          - not_null
+      - name: invoice_status
+        description: "Payment outcome reported by the billing system: paid or failed."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['paid', 'failed']
       - name: invoice_date
         description: "Date when the invoice was issued."
+        data_tests:
+          - not_null
       - name: due_date
         description: "Date when the invoice payment is due."
+        data_tests:
+          - not_null

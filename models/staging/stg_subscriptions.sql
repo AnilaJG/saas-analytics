@@ -6,11 +6,11 @@ renamed as (
     select
         subscription_id,
         customer_id,
-        mrr_amount,
-        status,
-        billing_interval,
-        start_date,
-        end_date,
+        mrr_amount::number(10, 2) as mrr_amount,
+        lower(status) as subscription_status,
+        lower(billing_interval) as billing_interval,
+        start_date::date as start_date,
+        end_date
     from source
 )
 
