@@ -11,3 +11,11 @@ profiles.yml
 .DS_Store
 Thumbs.db
 dbt_internal_packages/
+
+# Keys and secrets
+*.p8
+*.pem
+
+# Python
+.venv/
+__pycache__/
