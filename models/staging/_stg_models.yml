@@ -91,11 +91,24 @@ models:
                 field: customer_id
       - name: amount_due
         description: "Total invoice amount billed."
+        data_tests:
+          - not_null
       - name: amount_paid
         description: "Amount paid towards the invoice."
-      - name: status
-        description: "Payment status of the invoice."
+        data_tests:
+          - not_null
+      - name: invoice_status
+        description: "Payment outcome reported by the billing system: paid or failed."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['paid', 'failed']
       - name: invoice_date
         description: "Date when the invoice was issued."
+        data_tests:
+          - not_null
       - name: due_date
         description: "Date when the invoice payment is due."
+        data_tests:
+          - not_null
