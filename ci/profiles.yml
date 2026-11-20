@@ -1,0 +1,13 @@
+saas_analytics:
+  target: ci
+  outputs:
+    ci:
+      type: snowflake
+      account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
+      user: "{{ env_var('SNOWFLAKE_USER') }}"
+      private_key_path: /tmp/rsa_key.p8
+      role: dbt_ci_role
+      database: SAAS_ANALYTICS_CI
+      warehouse: dbt_ci_wh
+      schema: "{{ env_var('DBT_SCHEMA') }}"
+      threads: 4
