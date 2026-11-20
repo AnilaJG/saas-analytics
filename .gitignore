@@ -19,3 +19,6 @@ dbt_internal_packages/
 # Python
 .venv/
 __pycache__/
+
+# Allow the CI profile (contains no secrets)
+!ci/profiles.yml
