@@ -74,3 +74,39 @@ models:
           - accepted_values:
               arguments:
                 values: ['paid', 'partial', 'unpaid']
+
+  - name: fct_mrr_monthly
+    description: "One row per customer per month, from the customer's first paid month to the as_of_date. Month-end MRR and the movement that explains the change from the previous month."
+    columns:
+      - name: customer_id
+        description: "Foreign key to dim_customers."
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
+      - name: month_start_date
+        description: "First day of the month."
+        data_tests:
+          - not_null
+      - name: month_end_date
+        description: "Last day of the month. MRR is measured on this day."
+      - name: mrr
+        description: "Monthly recurring revenue from subscriptions active on month_end_date."
+        data_tests:
+          - not_null
+      - name: previous_mrr
+        description: "MRR in the previous month (0 in a customer's first month)."
+      - name: new_mrr
+        description: "MRR from a customer paying for the first time."
+      - name: reactivation_mrr
+        description: "MRR from a customer who paid before, stopped, and came back."
+      - name: expansion_mrr
+        description: "Increase in MRR from a customer who paid in both months."
+      - name: contraction_mrr
+        description: "Decrease in MRR from a customer who still pays."
+      - name: churned_mrr
+        description: "Last month's MRR from a customer whose MRR dropped to 0."
+      - name: is_paying
+        description: "True when the customer has MRR above 0 in the month."
