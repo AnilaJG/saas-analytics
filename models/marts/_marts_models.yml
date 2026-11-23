@@ -30,7 +30,7 @@ models:
       - name: most_recent_payment_date
         description: "The date of the most recent payment received from the customer."
       - name: customer_status
-        description: "Derived lifecycle status based on 90-day payment recency."
+        description: "Lifecycle status as of the as_of_date: active (a subscription is running), churned (had subscriptions, none running), prospect (never subscribed)."
         data_tests:
           - not_null
           - accepted_values:

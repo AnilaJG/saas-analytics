@@ -13,11 +13,7 @@ final as (
         lifetime_amount_paid,
         outstanding_balance,
         most_recent_payment_date,
-        case
-            when most_recent_payment_date >= current_date() - interval '90 days' then 'active'
-            when most_recent_payment_date is null then 'prospect'
-            else 'churned'
-        end as customer_status
+        customer_status
     from customer_metrics
 )
 
