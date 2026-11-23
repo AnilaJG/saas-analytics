@@ -110,3 +110,44 @@ models:
         description: "Last month's MRR from a customer whose MRR dropped to 0."
       - name: is_paying
         description: "True when the customer has MRR above 0 in the month."
+
+  - name: rpt_saas_metrics_monthly
+    description: "One row per month with the main SaaS metrics: MRR, ARR, customers, MRR movements, retention and churn. Built from fct_mrr_monthly. Retention and churn rates are ratios, so 1.0 means 100%."
+    columns:
+      - name: month_start_date
+        description: "First day of the month."
+        data_tests:
+          - unique
+          - not_null
+      - name: mrr
+        description: "Monthly recurring revenue at the end of the month."
+        data_tests:
+          - not_null
+      - name: arr
+        description: "Annual recurring revenue (MRR x 12)."
+      - name: paying_customers
+        description: "Customers with MRR above 0 at the end of the month."
+        data_tests:
+          - not_null
+      - name: arpa
+        description: "Average revenue per paying customer (MRR / paying customers)."
+      - name: new_mrr
+        description: "MRR from customers paying for the first time."
+      - name: reactivation_mrr
+        description: "MRR from customers who came back after leaving."
+      - name: expansion_mrr
+        description: "Extra MRR from existing customers who upgraded."
+      - name: contraction_mrr
+        description: "Lost MRR from customers who downgraded but still pay."
+      - name: churned_mrr
+        description: "Lost MRR from customers who stopped paying."
+      - name: net_new_mrr
+        description: "New + reactivation + expansion - contraction - churned MRR."
+      - name: gross_revenue_retention
+        description: "Share of last month's MRR kept after contraction and churn. Cannot exceed 1."
+      - name: net_revenue_retention
+        description: "Share of last month's MRR kept after contraction and churn, plus expansion. Above 1 means existing customers grew."
+      - name: churned_customers
+        description: "Customers whose MRR dropped to 0 this month."
+      - name: logo_churn_rate
+        description: "Churned customers divided by customers paying at the start of the month."
