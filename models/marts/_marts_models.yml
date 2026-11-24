@@ -151,3 +151,21 @@ models:
         description: "Customers whose MRR dropped to 0 this month."
       - name: logo_churn_rate
         description: "Churned customers divided by customers paying at the start of the month."
+
+  - name: rpt_cohort_retention
+    description: "Customer retention by signup cohort. A cohort is the quarter in which customers first paid. One row per cohort and months since start. Early cohorts are small, so their rates swing a lot."
+    columns:
+      - name: cohort_quarter
+        description: "First day of the quarter in which the customers first paid."
+        data_tests:
+          - not_null
+      - name: months_since_start
+        description: "Months since the customer's first paid month (0 is the first month)."
+        data_tests:
+          - not_null
+      - name: customers_observed
+        description: "Customers in the cohort whose history reaches this month."
+      - name: customers_paying
+        description: "Customers still paying in this month."
+      - name: customer_retention_rate
+        description: "customers_paying / customers_observed. 1.0 means 100%."
