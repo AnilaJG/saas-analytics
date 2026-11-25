@@ -10,7 +10,7 @@ renamed as (
         lower(status) as subscription_status,
         lower(billing_interval) as billing_interval,
         start_date::date as start_date,
-        end_date
+        end_date::date as end_date
     from source
 )
 
