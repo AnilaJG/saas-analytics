@@ -41,7 +41,7 @@ models:
                 to: ref('stg_customers')
                 field: customer_id
       - name: mrr_amount
-        description: "Monthly Recurring Revenue amount for the subscription."
+        description: "Monthly recurring revenue (MRR) of the subscription."
         data_tests:
           - not_null
       - name: subscription_status
@@ -52,7 +52,7 @@ models:
               arguments:
                 values: ['active', 'canceled']
       - name: billing_interval
-        description: "Billing frequency for the subscription (e.g., monthly, annual)."
+        description: "Billing frequency for the subscription: monthly or annual."
         data_tests:
           - not_null
           - accepted_values:
@@ -63,7 +63,7 @@ models:
         data_tests:
           - not_null
       - name: end_date
-        description: "Date when the subscription was terminated or expired."
+        description: "Date when the subscription was terminated or expired. Null if still active."
 
   - name: stg_invoices
     description: "Staging model for billing transactions. One row per invoice generated."

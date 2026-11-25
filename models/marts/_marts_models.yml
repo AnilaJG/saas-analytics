@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: dim_customers
-    description: "Customer dimension table containing profile details, lifetime metrics, and recency-based status."
+    description: "One row per customer with profile details, lifetime billing totals and status as of the as_of_date."
     columns:
       - name: customer_id
         description: "Unique primary key for each customer."
@@ -14,23 +14,23 @@ models:
       - name: signup_date
         description: "Account creation date."
       - name: plan_tier
-        description: "Current active plan tier."
+        description: "Plan tier chosen at signup."
         data_tests:
           - accepted_values:
               arguments:
                 values: ['Basic', 'Pro', 'Enterprise']
       - name: total_subscriptions
-        description: "Total count of subscriptions held."
+        description: "Number of subscriptions the customer has had."
       - name: lifetime_amount_due
-        description: "Total lifetime billed amount."
+        description: "Total amount billed across all of the customer's invoices."
       - name: lifetime_amount_paid
-        description: "Total lifetime paid amount."
+        description: "Total amount paid across all of the customer's invoices."
       - name: outstanding_balance
-        description: "Current outstanding balance across all accounts."
+        description: "Lifetime amount due minus lifetime amount paid."
       - name: most_recent_payment_date
-        description: "The date of the most recent payment received from the customer."
+        description: "Date of the customer's most recent invoice with a payment."
       - name: customer_status
-        description: "Lifecycle status as of the as_of_date: active (a subscription is running), churned (had subscriptions, none running), prospect (never subscribed)."
+        description: "Status as of the as_of_date: active (has a running subscription), churned (had subscriptions, none running) or prospect (never subscribed)."
         data_tests:
           - not_null
           - accepted_values:
@@ -38,7 +38,7 @@ models:
                 values: ['active', 'churned', 'prospect']
 
   - name: fct_invoices
-    description: "Invoice fact table capturing transactional billing, balances, and collection statuses."
+    description: "One row per invoice with billing amounts, dates and payment status."
     columns:
       - name: invoice_id
         description: "Unique identifier for each invoice."
@@ -46,11 +46,11 @@ models:
           - unique
           - not_null
       - name: subscription_id
-        description: "Foreign key linking the invoice to its parent subscription."
+        description: "Foreign key to the subscription the invoice belongs to."
         data_tests:
           - not_null
       - name: customer_id
-        description: "Foreign key linking the invoice to the customer dimension table."
+        description: "Foreign key to dim_customers."
         data_tests:
           - not_null
           - relationships:
@@ -58,17 +58,25 @@ models:
                 to: ref('dim_customers')
                 field: customer_id
       - name: company_name
-        description: "Customer company name associated with the invoice."
+        description: "Name of the customer company."
       - name: plan_tier
-        description: "Plan tier at the time of invoicing."
+        description: "Plan tier the customer chose at signup."
+      - name: invoice_date
+        description: "Date the invoice was issued."
+        data_tests:
+          - not_null
+      - name: due_date
+        description: "Date the invoice is due."
+        data_tests:
+          - not_null
       - name: amount_due
-        description: "Total billed amount for the invoice."
+        description: "Amount billed on the invoice."
       - name: amount_paid
-        description: "Amount successfully collected."
+        description: "Amount paid on the invoice."
       - name: unpaid_balance
-        description: "Remaining balance on the specific invoice."
+        description: "Amount due minus amount paid."
       - name: payment_status
-        description: "Collection classification."
+        description: "paid (amount paid covers the amount due), partial (some of it paid) or unpaid (nothing paid, including failed payments)."
         data_tests:
           - not_null
           - accepted_values:
