@@ -9,6 +9,8 @@ final as (
         customer_id,
         company_name,
         plan_tier,
+        invoice_date,
+        due_date,
         amount_due,
         amount_paid,
         unpaid_balance,
