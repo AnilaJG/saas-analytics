@@ -1,3 +1,5 @@
+-- Each customer must have exactly one row per month
+
 select
     customer_id,
     month_start_date,

@@ -1,6 +1,8 @@
+version: 2
+
 models:
   - name: int_customer_metrics
-    description: "Intermediate model aggregating subscription counts, revenue, and payment recency per customer."
+    description: "One row per customer: subscription count, lifetime billing totals, most recent payment and customer status as of the as_of_date."
     columns:
       - name: customer_id
         description: "Primary key for the customer."
@@ -16,37 +18,44 @@ models:
         data_tests:
           - not_null
       - name: plan_tier
-        description: "Subscription tier assigned to the customer."
+        description: "Plan tier chosen at signup."
         data_tests:
           - not_null
           - accepted_values:
               arguments:
                 values: ['Basic', 'Pro', 'Enterprise']
       - name: total_subscriptions
-        description: "Total number of distinct subscriptions owned by the customer."
-      - name: total_amount_due
-        description: "Lifetime total amount billed across all invoices."
-      - name: total_amount_paid
-        description: "Lifetime total amount successfully paid by the customer."
+        description: "Number of subscriptions the customer has had."
+      - name: lifetime_amount_due
+        description: "Total amount billed across all of the customer's invoices."
+      - name: lifetime_amount_paid
+        description: "Total amount paid across all of the customer's invoices."
       - name: outstanding_balance
-        description: "Total unpaid balance remaining (amount due minus amount paid)."
+        description: "Lifetime amount due minus lifetime amount paid."
       - name: most_recent_payment_date
-        description: "Timestamp of the customer's latest successful payment."
-        
+        description: "Date of the customer's most recent invoice with a payment."
+      - name: customer_status
+        description: "Status as of the as_of_date: active (has a running subscription), churned (had subscriptions, none running) or prospect (never subscribed)."
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['active', 'churned', 'prospect']
+
   - name: int_invoice_payments
-    description: "Intermediate model enriching invoice transactions with customer and subscription details."
+    description: "One row per invoice, with customer details, an unpaid balance and a payment status."
     columns:
       - name: invoice_id
-        description: "Primary key for the invoice transaction."
+        description: "Primary key for the invoice."
         data_tests:
           - unique
           - not_null
       - name: subscription_id
-        description: "Foreign key linking to the subscription."
+        description: "Foreign key to the subscription the invoice belongs to."
         data_tests:
           - not_null
       - name: customer_id
-        description: "Foreign key linking to the customer."
+        description: "Foreign key to the customer."
         data_tests:
           - not_null
           - relationships:
@@ -56,22 +65,28 @@ models:
       - name: company_name
         description: "Name of the customer company."
       - name: plan_tier
-        description: "Plan tier for the subscription."
+        description: "Plan tier the customer chose at signup."
       - name: amount_due
-        description: "Total amount billed on the invoice."
+        description: "Amount billed on the invoice."
       - name: amount_paid
-        description: "Total amount paid toward the invoice."
+        description: "Amount paid on the invoice."
       - name: unpaid_balance
-        description: "Remaining unpaid balance on the invoice."
+        description: "Amount due minus amount paid."
       - name: payment_status
-        description: "Categorized status of the invoice."
+        description: "paid (amount paid covers the amount due), partial (some of it paid) or unpaid (nothing paid, including failed payments)."
         data_tests:
           - not_null
           - accepted_values:
               arguments:
                 values: ['paid', 'partial', 'unpaid']
-      - name: payment_date
-        description: "Date the payment was settled."
+      - name: invoice_date
+        description: "Date the invoice was issued."
+        data_tests:
+          - not_null
+      - name: due_date
+        description: "Date the invoice is due."
+        data_tests:
+          - not_null
 
   - name: int_customer_mrr_monthly
     description: "One row per customer per month, from the customer's first paid month to the as_of_date. Holds month-end MRR and how it changed compared with the previous month."
